@@ -30,7 +30,7 @@ const usuarioGet = async (req = request, res = response) => {
 const usuariosPost = async (req, res = response) => {
 
     const { nombre, correo, password, rol } = req.body;
-    const usuario = new Usuario( {nombre, correo, password, rol} );
+    const usuario = new Usuario({nombre, correo, password, rol});
 
     // Verificar si el correo existe
     const existeEmail = await Usuario.findOne({ correo: correo })
@@ -79,9 +79,6 @@ const usuariosPatch = (req, res = response) => {
 const usuariosDelete = async (req, res = response) => {
 
     const { id } = req.params;
-
-    // //Fisicamente lo borramos
-    // const usuario = await Usuario.findByIdAndDelete( id );
 
     const usuario = await Usuario.findByIdAndUpdate(id, {"estado": false}, {new: true})
 
