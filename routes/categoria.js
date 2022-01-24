@@ -8,14 +8,14 @@ const { validarJWT } = require("../middleware/validar-jwt");
 const router = Router();
 
 // publico
-router.get( '/', [
-    validarCampos
-], categoriasGet ); 
+router.get( '/', categoriasGet ); 
 
 // publico
 router.get( "/:id", [
-    check("id").custom( existeCategoria )
-],categoriaGetId )
+    check( "id", "El id no es un id de Mongo válido" ).isMongoId(),
+    check("id").custom( existeCategoria ),
+    validarCampos
+], categoriaGetId )
 
 // Privado
 router.post( "/:id", [ 

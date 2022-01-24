@@ -19,8 +19,11 @@ const categoriasGet = async ( req, res ) => {
     })
 }
 
-const categoriaGetId = ( req, res ) => {
+const categoriaGetId = async ( req, res ) => {
+    const { id } = req.params;
+    const categoria = await Categoria.findById( id ).populate("usuario", [ "nombre", "correo" ])
 
+    res.json( categoria );
 }
 
 const categoriaPost = async ( req, res ) => {
