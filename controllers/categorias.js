@@ -49,11 +49,29 @@ const categoriaPost = async ( req, res ) => {
     res.status(201).json(categoria)
 }
 
-const categoriaPut = ( req, res ) => {
+const categoriaPut = async ( req, res ) => {
+    const { id } = req.params;
 
+    const { estado, usuario, ...data } = req.body;
+    
+    data.nombre = data.nombre.toUpperCase();
+
+    const categoria = await Categoria.findByIdAndUpdate( id, data, { new: true })
+
+    res.status(200).json(categoria)
 }
 
-const categoriaDelete = ( req, res ) => {
+const categoriaDelete = async ( req, res ) => {
+
+    try {
+        const { id } = req.params;
+        const categoriaBorrada = await Categoria.findByIdAndUpdate( id, { estado: false }, { new: true });
+    
+        res.status(200).json( categoriaBorrada )
+        
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 

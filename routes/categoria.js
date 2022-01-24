@@ -4,6 +4,7 @@ const { categoriasGet, categoriaGetId, categoriaPost, categoriaPut, categoriaDel
 const { existeCategoria } = require("../helpers/db-validator");
 const { validarCampos } = require("../middleware/validar-campos");
 const { validarJWT } = require("../middleware/validar-jwt");
+const { esAdminRole } = require("../middleware/validar-roles");
 
 const router = Router();
 
@@ -26,9 +27,19 @@ router.post( "/:id", [
 
 //Privado
 router.put( "/:id", [
+    validarJWT,
+    check("nombre", "El nombre es obligatorio").not().isEmpty(),
+    check("id").custom( existeCategoria ),
+    validarCampos
 ], categoriaPut );
 
 // Borrar una categoria - Admin
-router.delete( "/:id", categoriaDelete );
+router.delete( "/:id", [
+    validarJWT,
+    esAdminRole,
+    check( "id", "El id no es un id de Mongo válido" ).isMongoId(),
+    check("id").custom( existeCategoria ),
+    validarCampos
+], categoriaDelete );
 
 module.exports = router;
