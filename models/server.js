@@ -7,6 +7,7 @@ class Server {
         this.app = express();
         this.usuariosPath = "/api/usuarios"; 
         this.authPath = "/api/auth";
+        this.categoriaPath = "/api/categorias";
 
         //Conectar a base de datos
         this.conectarDB();
@@ -36,6 +37,7 @@ class Server {
     routes(){
         this.app.use(this.authPath, require("../routes/auth"))
         this.app.use(this.usuariosPath, require("../routes/usuarios"))
+        this.app.use(this.categoriaPath, require("../routes/categoria"))
     }
 
     listen(){

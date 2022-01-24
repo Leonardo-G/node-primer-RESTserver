@@ -7,7 +7,7 @@ const usuarioGet = async (req = request, res = response) => {
     const { limit, skip } = req.query;
 
     if(!limit){
-        const usuarios = await Usuario.find({ estado: true});
+        const usuarios = await Usuario.find({ estado: true });
         
         return res.json({
             usuarios

@@ -18,7 +18,12 @@ const validarId = async ( id ) => {
     }
 }
 
+const existeCategoria = () => {
+
+}
+
 module.exports = {
     emailExiste,
-    validarId
+    validarId,
+    existeCategoria
 }
