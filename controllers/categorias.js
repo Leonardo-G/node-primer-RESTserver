@@ -1,5 +1,4 @@
 const Categoria = require("../models/categoria");
-const Usuario = require("../models/usuario");
 
 const categoriasGet = async ( req, res ) => {
 

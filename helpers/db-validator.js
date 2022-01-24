@@ -1,5 +1,6 @@
 const { response } = require("express")
 const Categoria = require("../models/categoria")
+const Producto = require("../models/producto")
 const Usuario = require("../models/usuario")
 
 const emailExiste = async ( correo = "" ) => {
@@ -26,8 +27,16 @@ const existeCategoria = async ( id ) => {
     }
 }
 
+const existeProductoPorId = async ( id ) => {
+    const existeProducto = await Producto.findById(id);
+    if( !existeProducto ){
+        throw new Error(`El ${ id } no existe`)
+    }
+}
+
 module.exports = {
     emailExiste,
     validarId,
-    existeCategoria
+    existeCategoria,
+    existeProductoPorId
 }
