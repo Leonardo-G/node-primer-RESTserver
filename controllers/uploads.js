@@ -72,7 +72,53 @@ const actualizarArchivo = async ( req, res ) => {
     res.json({ modelo })
 }
 
+const obtenerImagen = async ( req, res ) => {
+
+    const { id, coleccion } = req.params;
+
+    let modelo;
+
+    switch ( coleccion ) {
+        case "usuarios":
+            modelo = await Usuario.findById( id );
+            
+            if(!modelo){
+                return res.status(400).json({
+                    msg: "No existe un usuario con el id ${ id }"
+                })
+            }
+            break;
+        case "productos":
+            modelo = await Producto.findById( id );
+            
+            if(!modelo){
+                return res.status(400).json({
+                    msg: "No existe un usuario el producto con el id ${ id }"
+                })
+            }
+            break;
+    
+        default:
+            return res.status(500).json({ msg: "error en la validación" })
+    }
+
+    //Limpiar imagenes previas
+    if(modelo.img){
+        //Hay que borrar la imagen del servidor
+        const pathImagen = path.join( __dirname, "../uploads", coleccion, modelo.img);
+        if( fs.existsSync( pathImagen ) ){
+            return res.sendFile( pathImagen );
+        }
+    }
+
+    //En caso de no mandar un imagen
+    const pathImagen = path.join( __dirname, "../assets/no-image.jpg");
+    res.sendFile( pathImagen );
+        
+}
+
 module.exports = {
     cargarArchivo,
-    actualizarArchivo
+    actualizarArchivo,
+    obtenerImagen
 }
