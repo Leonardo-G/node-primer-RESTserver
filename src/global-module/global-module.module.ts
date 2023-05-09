@@ -1,7 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { constansGlobal } from './constants';
 
 @Global()
 @Module({
@@ -10,7 +9,7 @@ import { constansGlobal } from './constants';
       envFilePath: '.env',
       isGlobal: true,
     }),
-    MongooseModule.forRoot(constansGlobal.urlDatabase),
+    MongooseModule.forRoot(process.env.MONGODB_CNN),
   ],
   exports: [MongooseModule],
 })
