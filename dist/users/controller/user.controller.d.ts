@@ -24,7 +24,7 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { UsersService } from '../services/users.service';
-import { CreateUserDTO } from '../dto/users.dto';
+import { CreateUserDTO, UpdateUserDTO } from '../dto/users.dto';
 export declare class UsersController {
     private usersService;
     constructor(usersService: UsersService);
@@ -41,4 +41,14 @@ export declare class UsersController {
     createUser(createUserDTO: CreateUserDTO): Promise<import("mongoose").Document<unknown, {}, import("../schema/user.schema").User> & Omit<import("../schema/user.schema").User & {
         _id: import("mongoose").Types.ObjectId;
     }, never>>;
+    userPut(updateUserDTO: UpdateUserDTO, id: string): Promise<import("mongoose").Document<unknown, {}, import("../schema/user.schema").User> & Omit<import("../schema/user.schema").User & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>>;
+    userDelete(rol: string, id: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../schema/user.schema").User> & Omit<import("../schema/user.schema").User & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>> & Omit<import("mongoose").Document<unknown, {}, import("../schema/user.schema").User> & Omit<import("../schema/user.schema").User & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>, never>>;
 }

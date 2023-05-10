@@ -2,17 +2,23 @@ import {
   Body,
   Controller,
   DefaultValuePipe,
+  Delete,
   Get,
   HttpException,
+  Param,
   ParseIntPipe,
+  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { UsersService } from '../services/users.service';
-import { CreateUserDTO } from '../dto/users.dto';
-import { IsExistUserGuard } from '../guards/is-exist-user.guard';
 import { ApiTags } from '@nestjs/swagger';
+import { UsersService } from '../services/users.service';
+import { CreateUserDTO, UpdateUserDTO } from '../dto/users.dto';
+import { IsExistUserGuard } from '../guards/is-exist-user.guard';
+import { ValidateIdMongoPipe } from 'src/common/pipes/validate-id-mongo.pipe';
+import { ValidateRolPipe } from 'src/common/pipes/validate-rol/validate-rol.pipe';
 
 @ApiTags('Users')
 @Controller('users')
@@ -37,6 +43,30 @@ export class UsersController {
   createUser(@Body() createUserDTO: CreateUserDTO) {
     try {
       return this.usersService.newUser(createUserDTO);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Put(':id')
+  userPut(
+    @Body() updateUserDTO: UpdateUserDTO,
+    @Param('id', ValidateIdMongoPipe) id: string,
+  ) {
+    try {
+      return this.usersService.updateUser(updateUserDTO, id);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Patch(':id')
+  userDelete(
+    @Body('rol', ValidateRolPipe) rol: string,
+    @Param('id', ValidateIdMongoPipe) id: string,
+  ) {
+    try {
+      return this.usersService.deleteUser(id);
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

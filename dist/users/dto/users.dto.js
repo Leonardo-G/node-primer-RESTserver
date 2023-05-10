@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserDTO = void 0;
+exports.UpdateUserDTO = exports.CreateUserDTO = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateUserDTO {
@@ -47,4 +47,28 @@ __decorate([
     __metadata("design:type", String)
 ], CreateUserDTO.prototype, "rol", void 0);
 exports.CreateUserDTO = CreateUserDTO;
+class UpdateUserDTO {
+}
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(3),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateUserDTO.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.MinLength)(6),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateUserDTO.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsIn)(['ADMIN_ROLE', 'USER_ROLE']),
+    __metadata("design:type", String)
+], UpdateUserDTO.prototype, "rol", void 0);
+exports.UpdateUserDTO = UpdateUserDTO;
 //# sourceMappingURL=users.dto.js.map

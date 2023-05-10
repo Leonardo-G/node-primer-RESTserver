@@ -35,6 +35,20 @@ let UsersService = class UsersService {
         await user.save();
         return user;
     }
+    async updateUser(createUserDTO, id) {
+        if (createUserDTO.password) {
+            createUserDTO.password = bcrypt.hashSync(createUserDTO.password, 10);
+        }
+        const user = await this.userModel
+            .findByIdAndUpdate(id, createUserDTO, {
+            new: true,
+        })
+            .exec();
+        return user;
+    }
+    async deleteUser(id) {
+        return this.userModel.findByIdAndUpdate(id, { estado: false }, { new: true });
+    }
     async countUsers() {
         try {
             const users = await this.userModel.countDocuments({ estado: true });

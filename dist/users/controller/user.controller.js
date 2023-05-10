@@ -14,10 +14,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const users_service_1 = require("../services/users.service");
 const users_dto_1 = require("../dto/users.dto");
 const is_exist_user_guard_1 = require("../guards/is-exist-user.guard");
-const swagger_1 = require("@nestjs/swagger");
+const validate_id_mongo_pipe_1 = require("../../common/pipes/validate-id-mongo.pipe");
+const validate_rol_pipe_1 = require("../../common/pipes/validate-rol/validate-rol.pipe");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -34,6 +36,22 @@ let UsersController = class UsersController {
     createUser(createUserDTO) {
         try {
             return this.usersService.newUser(createUserDTO);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, error.status);
+        }
+    }
+    userPut(updateUserDTO, id) {
+        try {
+            return this.usersService.updateUser(updateUserDTO, id);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, error.status);
+        }
+    }
+    userDelete(rol, id) {
+        try {
+            return this.usersService.deleteUser(id);
         }
         catch (error) {
             throw new common_1.HttpException(error.message, error.status);
@@ -56,6 +74,22 @@ __decorate([
     __metadata("design:paramtypes", [users_dto_1.CreateUserDTO]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createUser", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id', validate_id_mongo_pipe_1.ValidateIdMongoPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [users_dto_1.UpdateUserDTO, String]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "userPut", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Body)('rol', validate_rol_pipe_1.ValidateRolPipe)),
+    __param(1, (0, common_1.Param)('id', validate_id_mongo_pipe_1.ValidateIdMongoPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "userDelete", null);
 UsersController = __decorate([
     (0, swagger_1.ApiTags)('Users'),
     (0, common_1.Controller)('users'),
