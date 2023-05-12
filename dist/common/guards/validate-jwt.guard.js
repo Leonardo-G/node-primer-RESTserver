@@ -6,20 +6,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidateIdMongoPipe = void 0;
+exports.ValidateJwtGuard = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("mongoose");
-let ValidateIdMongoPipe = class ValidateIdMongoPipe {
-    transform(value, metadata) {
-        const isValidIdMongo = mongoose_1.Types.ObjectId.isValid(value);
-        if (!isValidIdMongo) {
-            throw new common_1.BadRequestException(`The ID: ${value} is not valid id Mongo`);
-        }
-        return value;
+let ValidateJwtGuard = class ValidateJwtGuard {
+    canActivate(context) {
+        return true;
     }
 };
-ValidateIdMongoPipe = __decorate([
+ValidateJwtGuard = __decorate([
     (0, common_1.Injectable)()
-], ValidateIdMongoPipe);
-exports.ValidateIdMongoPipe = ValidateIdMongoPipe;
-//# sourceMappingURL=validate-id-mongo.pipe.js.map
+], ValidateJwtGuard);
+exports.ValidateJwtGuard = ValidateJwtGuard;
+//# sourceMappingURL=validate-jwt.guard.js.map
