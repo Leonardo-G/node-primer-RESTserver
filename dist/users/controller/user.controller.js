@@ -20,6 +20,7 @@ const users_dto_1 = require("../dto/users.dto");
 const is_exist_user_guard_1 = require("../guards/is-exist-user.guard");
 const validate_id_mongo_pipe_1 = require("../../common/pipes/validate-id-mongo.pipe");
 const validate_rol_pipe_1 = require("../../common/pipes/validate-rol/validate-rol.pipe");
+const validate_jwt_guard_1 = require("../../common/guards/validate-jwt.guard");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -84,6 +85,7 @@ __decorate([
 ], UsersController.prototype, "userPut", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(validate_jwt_guard_1.ValidateJwtGuard),
     __param(0, (0, common_1.Body)('rol', validate_rol_pipe_1.ValidateRolPipe)),
     __param(1, (0, common_1.Param)('id', validate_id_mongo_pipe_1.ValidateIdMongoPipe)),
     __metadata("design:type", Function),

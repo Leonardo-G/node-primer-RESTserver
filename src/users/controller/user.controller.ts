@@ -19,6 +19,7 @@ import { CreateUserDTO, UpdateUserDTO } from '../dto/users.dto';
 import { IsExistUserGuard } from '../guards/is-exist-user.guard';
 import { ValidateIdMongoPipe } from 'src/common/pipes/validate-id-mongo.pipe';
 import { ValidateRolPipe } from 'src/common/pipes/validate-rol/validate-rol.pipe';
+import { ValidateJwtGuard } from 'src/common/guards/validate-jwt.guard';
 
 @ApiTags('Users')
 @Controller('users')
@@ -61,6 +62,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @UseGuards(ValidateJwtGuard)
   userDelete(
     @Body('rol', ValidateRolPipe) rol: string,
     @Param('id', ValidateIdMongoPipe) id: string,
