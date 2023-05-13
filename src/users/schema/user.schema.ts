@@ -45,7 +45,7 @@ export class User {
     type: Boolean,
     default: true,
   })
-  estado: boolean;
+  status: boolean;
 
   @Prop({
     type: Boolean,
