@@ -57,7 +57,7 @@ __decorate([
         default: true,
     }),
     __metadata("design:type", Boolean)
-], User.prototype, "estado", void 0);
+], User.prototype, "status", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
         type: Boolean,

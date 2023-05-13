@@ -8,6 +8,26 @@ import {
   MinLength,
 } from 'class-validator';
 
+export class UpdateUserDTO {
+  @ApiProperty()
+  @IsString()
+  @MinLength(3)
+  @IsOptional()
+  readonly name: string;
+
+  @ApiProperty()
+  @MinLength(6)
+  @IsString()
+  @IsOptional()
+  password: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  @IsIn(['ADMIN_ROLE', 'USER_ROLE'])
+  readonly rol: string;
+}
+
 export class CreateUserDTO {
   @ApiProperty({
     required: true,
@@ -34,26 +54,6 @@ export class CreateUserDTO {
   })
   @IsNotEmpty()
   @IsString()
-  @IsIn(['ADMIN_ROLE', 'USER_ROLE'])
-  readonly rol: string;
-}
-
-export class UpdateUserDTO {
-  @ApiProperty()
-  @IsString()
-  @MinLength(3)
-  @IsOptional()
-  readonly name: string;
-
-  @ApiProperty()
-  @MinLength(6)
-  @IsString()
-  @IsOptional()
-  password: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsOptional()
   @IsIn(['ADMIN_ROLE', 'USER_ROLE'])
   readonly rol: string;
 }

@@ -30,7 +30,7 @@ export declare class User {
     password: string;
     img: string;
     rol: string;
-    estado: boolean;
+    status: boolean;
     google: boolean;
 }
 export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, import("mongoose").Document<unknown, any, User> & Omit<User & {
