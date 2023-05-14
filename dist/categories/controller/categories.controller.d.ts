@@ -24,6 +24,8 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { CategoriesService } from '../services/categories.service';
+import { ReqUser } from 'src/common/interfaces/req-jwt.interface';
+import { CreateCategoryDTO } from '../dto/category.dto';
 export declare class CategoriesController {
     private categoriesService;
     constructor(categoriesService: CategoriesService);
@@ -38,6 +40,27 @@ export declare class CategoriesController {
         }>, never>)[];
     }>;
     getOne(id: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../schema/category.schema").Category> & Omit<import("../schema/category.schema").Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>> & Omit<import("mongoose").Document<unknown, {}, import("../schema/category.schema").Category> & Omit<import("../schema/category.schema").Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>, never>>;
+    categoriesPost(createCategoryDTO: CreateCategoryDTO, { user }: ReqUser): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../schema/category.schema").Category> & Omit<import("../schema/category.schema").Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>> & Omit<import("mongoose").Document<unknown, {}, import("../schema/category.schema").Category> & Omit<import("../schema/category.schema").Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>, never>>;
+    categoriesPut(createCategoryDTO: CreateCategoryDTO, id: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../schema/category.schema").Category> & Omit<import("../schema/category.schema").Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>> & Omit<import("mongoose").Document<unknown, {}, import("../schema/category.schema").Category> & Omit<import("../schema/category.schema").Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>, never>>;
+    categoriesDelete(rol: string, id: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../schema/category.schema").Category> & Omit<import("../schema/category.schema").Category & {
         _id: import("mongoose").Types.ObjectId;
     }, never>> & Omit<import("mongoose").Document<unknown, {}, import("../schema/category.schema").Category> & Omit<import("../schema/category.schema").Category & {
         _id: import("mongoose").Types.ObjectId;

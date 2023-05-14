@@ -38,6 +38,27 @@ let CategoriesService = class CategoriesService {
             .exec();
         return category;
     }
+    async newCategory(name, idUser) {
+        const existCategory = await this.categoryModel.findOne({ name });
+        if (existCategory) {
+            throw new common_1.BadRequestException(`The category ${name} is already exists`);
+        }
+        const data = {
+            name,
+            user: idUser,
+        };
+        const category = new this.categoryModel(data);
+        await category.save();
+        return category;
+    }
+    async updateCategory(name, idCategory) {
+        const category = await this.categoryModel.findByIdAndUpdate(idCategory, { name }, { new: true });
+        return category;
+    }
+    async deleteCategory(idCategory) {
+        const category = await this.categoryModel.findByIdAndUpdate(idCategory, { status: false }, { new: true });
+        return category;
+    }
     async countCategories() {
         const categories = await this.categoryModel
             .countDocuments({ status: true })

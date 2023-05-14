@@ -44,5 +44,26 @@ export declare class CategoriesService {
     }, never> & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>, never>>;
+    newCategory(name: string, idUser: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Category> & Omit<Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>> & Omit<import("mongoose").Document<unknown, {}, Category> & Omit<Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>, never>>;
+    updateCategory(name: string, idCategory: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Category> & Omit<Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>> & Omit<import("mongoose").Document<unknown, {}, Category> & Omit<Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>, never>>;
+    deleteCategory(idCategory: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Category> & Omit<Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>> & Omit<import("mongoose").Document<unknown, {}, Category> & Omit<Category & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>, never>>;
     countCategories(): Promise<number>;
 }
