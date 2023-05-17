@@ -1,7 +1,12 @@
-import { Injectable, ServiceUnavailableException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from '../schema/product.schema';
 import { Model } from 'mongoose';
+import { CreateProductDTO } from '../dto/product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -25,6 +30,29 @@ export class ProductsService {
         'Error in server: service Products',
       );
     }
+  }
+
+  async newProduct(createProductDTO: CreateProductDTO, idUser: string) {
+    const { name, ...data } = createProductDTO;
+
+    const isExist = await this.productModel.findOne({
+      name: createProductDTO.name,
+    });
+
+    if (isExist) {
+      throw new BadRequestException('The product is already exists');
+    }
+
+    const dataObj = {
+      ...data,
+      name: name.toUpperCase(),
+      user: idUser,
+    };
+
+    const product = new this.productModel(dataObj);
+    await product.save();
+
+    return product;
   }
 
   async countDocuments() {

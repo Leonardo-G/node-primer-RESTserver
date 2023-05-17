@@ -17,7 +17,6 @@ export class Product {
   @Prop({
     type: Boolean,
     default: true,
-    required: true,
   })
   status: boolean;
 

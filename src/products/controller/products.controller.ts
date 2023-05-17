@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   DefaultValuePipe,
   Get,
@@ -6,9 +7,15 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  Req,
   ServiceUnavailableException,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from '../services/products.service';
+import { ValidateJwtGuard } from 'src/common/guards/validate-jwt.guard';
+import { CreateProductDTO } from '../dto/product.dto';
+import { ReqUser } from 'src/common/interfaces/req-jwt.interface';
+import { Request } from 'express';
 
 @Controller('products')
 export class ProductsController {
@@ -26,6 +33,19 @@ export class ProductsController {
       ]);
 
       return { total, products };
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Post()
+  @UseGuards(ValidateJwtGuard)
+  postProducts(
+    @Body() createProductsDTO: CreateProductDTO,
+    @Req() { user }: ReqUser & Request,
+  ) {
+    try {
+      return this.productsServices.newProduct(createProductsDTO, user.id);
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
