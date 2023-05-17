@@ -8,7 +8,13 @@ import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 
 @Module({
-  imports: [UsersModule, GlobalModuleModule, CategoriesModule, AuthModule, ProductsModule],
+  imports: [
+    UsersModule,
+    GlobalModuleModule,
+    CategoriesModule,
+    AuthModule,
+    ProductsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
