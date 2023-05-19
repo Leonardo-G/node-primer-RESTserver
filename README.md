@@ -1,73 +1,111 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Rest Server
+Proyecto de Node en un entorno NEST, donde se creó la API cumpliendo con la arquitectura REST, para leer/crear/actualizar/eliminar.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Estructura de archivos
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+```
+src
+│__ main.ts                     # Archivo principal para la inicialización 
+|                                 de la aplicación 
+│__ app.module.ts               # Archivo de módulo principal de la aplicación
+│__ ...
+│   
+├─ auth/
+│   ├── controller/             
+│   │   ├── auth.controller.ts  # Maneja las solicitudes HTTP relacionadas
+|   |   |                         con la autenticación.
+│   │   └── ...
+│   ├── dto/                    # Carpeta para Data Transfer Objects (DTOs)
+│   │   ├── auth-return.dto.ts  # Respuesta de autenticación que se devuelve al 
+|   |   |                         cliente. status OK
+│   │   └── auth.dto.ts         # DTO que se envía desde el cliente al servidor.
+│   ├── service/                # Maneja la lógica de autenticación y la interacción 
+|   |   |                         con la base de datos.
+│   │   ├── auth.service.ts     # Contiene el servicio de autenticación
+│   │   └── ...
+│   └── auth.module.ts          # Archivo de módulo principal para la autenticación.
+│
+├─ common/
+|   ├── guards/              
+│   │   ├── validate-jwt.guard.ts # Guard que se utiliza para proteger las rutas 
+|   |   |                         que requieren autenticación.
+│   │   └── ...                   # Guard que se utiliza para asegurar sea 
+|   |                             un usuario válido.
+│   ├── interface/
+│   │   └── req-jwt.interface.ts  # Interfaz de usuario de autenticación
+│   └── pipes/                    
+│       ├── validate-rol.pipe.ts  # Pipe que se utiliza para validar rol del usuario
+│       └── validate-id-mongo.pipe.ts # Pipe para validar el MONGO ID
+│
+├─ global-module/
+|   └── global-module.module.ts      # Modulo @Global para configurar la 
+|                                 conexión con la base de datos, variables de entorno, etc.
+│
+├─ categories/
+│   ├── controller/             
+│   │   ├── categories.controller.ts  # Maneja las solicitudes HTTP relacionadas
+|   |   |                              con las categorías.
+│   │   └── ...
+│   ├── dto/                    
+│   │   ├── category.dto.ts         # DTO para categories
+│   ├── service/                
+│   │   ├── categories.service.ts   # Contiene el servicio de categories.
+│   │   └── ...
+│   ├── schema/                
+│   │   └── category.schema.ts     # schema de Mongoose para el modelo "Category".
+│   ├── service/                
+│   │   ├── proyecto.service.ts    # Contiene el servicio de proyectos.
+│   │   └── ...
+│   └── categories.module.ts        # Archivo de módulo principal para las categories.
+│
+├─ products/
+│   ├── controller/             
+│   │   ├── products.controller.ts  # Maneja las solicitudes HTTP relacionadas
+|   |   |                          con las products.
+│   │   └── ...
+│   ├── dto/                    
+│   │   ├── product.dto.ts        # Respuesta de products que se devuelve al 
+|   |   |                          cliente.
+│   ├── schema/
+│   │   ├── product.schema.ts     # Schema de Mongoose para el modelo "Product".
+│   │   └── ...
+│   └── service/
+│       ├── product.service.ts     # Contiene el servicio de products.
+│       └── ...
+|
+├─ users/
+│   ├── controller/             
+│   │   ├── users.controller.ts  # Maneja las solicitudes HTTP relacionadas 
+|   |   |                          con los usuarios.
+│   │   └── ...
+│   ├── schema/
+│   │   ├── user.schema.ts  # Schema de Mongoose para el modelo "Tarea".
+│   │   └── ...
+│   ├── service/
+│   │   ├── users.service.ts # Contiene el servicio de tareas.
+│   │   └── ...
+│   └── users.module.ts  # Archivo de módulo principal para los proyectos.
+|
+├─ app.controller.spec.ts
+├─ app.controller.ts
+├─ app.module.ts
+├─ app.service.ts
+└─ main.ts
 ```
 
-## Running the app
+### Herramientas
+Herramientas que se utiliza en este proyecto
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+-Nestjs: Framework de Nodejs, para la creación de aplicaciones del lado del servidor
+  - @nestjs/common: v9.0.0
+  - @nestjs/config: v2.3.1
+  - @nestjs/core: v9.0.0
+  - @nestjs/jwt: v10.0.3
+  - @nestjs/mongoose: v9.2.2
+  - @nestjs/platform-express: v9.0.0
+  - @nestjs/swagger: v6.3.0
+- bcrypt: Paquete para hashear cadenas de texto: v5.1.0.
+- class-validator: biblioteca de validación de datos. v0.12.0
+- mongodb: Contrololador de mongodb: v5.2.0
+- mongoose: ORM de mongoDB para node. v5.2.0

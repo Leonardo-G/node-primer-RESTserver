@@ -42,7 +42,7 @@ export class ProductsController {
   }
 
   @Get(':id')
-  getIdProduct(@Param('id', ValidateIdMongoPipe) id: string){
+  getIdProduct(@Param('id', ValidateIdMongoPipe) id: string) {
     try {
       return this.productsServices.getProductById(id);
     } catch (error) {
