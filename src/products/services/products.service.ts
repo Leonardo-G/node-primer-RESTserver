@@ -6,7 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from '../schema/product.schema';
 import { Model } from 'mongoose';
-import { CreateProductDTO } from '../dto/product.dto';
+import { CreateProductDTO, UpdateProductDTO } from '../dto/product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -32,6 +32,15 @@ export class ProductsService {
     }
   }
 
+  async getProductById(id: string) {
+    const product = await this.productModel
+      .findById(id)
+      .populate('User', ['name', 'email'])
+      .exec();
+
+    return product;
+  }
+
   async newProduct(createProductDTO: CreateProductDTO, idUser: string) {
     const { name, ...data } = createProductDTO;
 
@@ -51,6 +60,31 @@ export class ProductsService {
 
     const product = new this.productModel(dataObj);
     await product.save();
+
+    return product;
+  }
+
+  async findByIdAndUpdate(
+    idProduct: string,
+    updateProductDTO: UpdateProductDTO,
+  ) {
+    if (updateProductDTO.name) {
+      updateProductDTO.name = updateProductDTO.name.toUpperCase();
+    }
+
+    const product = await this.productModel
+      .findByIdAndUpdate(idProduct, updateProductDTO, { new: true })
+      .exec();
+
+    return product;
+  }
+
+  async deleteProduct(id: string) {
+    const product = await this.productModel.findByIdAndUpdate(
+      id,
+      { status: false },
+      { new: true },
+    );
 
     return product;
   }

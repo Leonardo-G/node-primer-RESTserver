@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/swagger';
 import {
   IsInt,
   IsMongoId,
@@ -25,3 +26,5 @@ export class CreateProductDTO {
   @IsString()
   img: string;
 }
+
+export class UpdateProductDTO extends PartialType(CreateProductDTO) {}
